@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+
+  --color-bg-page: #F2F2F7;
+  --color-bg-card: #FFFFFF;
+  --color-text-primary: #0F0F12;
+  --color-text-secondary: #6B6B7B;
+  --color-text-tertiary: #9090A0;
+  --color-accent-indigo: #4338CA;
+  --color-accent-green: #16A34A;
+  --color-border-light: rgba(0, 0, 0, 0.06);
+  --color-border-medium: #D1D1D8;
+
+  --background-image-gradient-hero: radial-gradient(ellipse 60% 55% at 50% -5%, #F97316 0%, #FB923C 25%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at -5% 50%, #C7D2FE 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 105% 50%, #C7D2FE 0%, transparent 60%);
+
+  --background-image-illus-blue: linear-gradient(160deg, #C7D2FE 0%, #818CF8 100%);
+  --background-image-illus-orange: linear-gradient(135deg, #FED7AA 0%, #F97316 60%, #EA580C 100%);
+  --background-image-illus-green: linear-gradient(135deg, #BBF7D0 0%, #4ADE80 50%, #16A34A 100%);
+  --background-image-illus-violet: linear-gradient(135deg, #E9D5FF 0%, #A855F7 60%, #7E22CE 100%);
+  --background-image-illus-red: linear-gradient(135deg, #FECACA 0%, #F87171 50%, #DC2626 100%);
+}
+
+@layer base {
+  body {
+    @apply bg-bg-page text-text-secondary font-sans;
+  }
+
+  h1, h2 {
+    @apply font-serif text-text-primary;
+  }
+
+  h3 {
+    @apply font-sans font-semibold text-text-primary;
+  }
+}
+
+.btn-primary {
+  @apply bg-text-primary text-white border-none rounded-full px-7 py-3 font-sans text-[15px] font-medium tracking-tight cursor-pointer transition-opacity hover:opacity-90;
+}
+
+.btn-secondary {
+  @apply bg-white text-text-primary border border-border-medium rounded-full px-7 py-3 font-sans text-[15px] font-normal cursor-pointer transition-colors hover:bg-gray-50;
+}
+
+.badge-pill {
+  @apply bg-[#EEF2FF] text-accent-indigo border border-[#C7D2FE] rounded-full px-3.5 py-1 text-xs font-medium;
+}
+
+.card {
+  @apply bg-white rounded-[18px] border border-border-light p-4.5;
+}
+
+.screen-hero {
+  @apply min-h-[160px] bg-bg-page bg-gradient-hero flex flex-col items-center justify-end pb-5;
+}
+
+.tab-bar {
+  @apply bg-white/85 backdrop-blur-[20px] border-t border-black/10 h-16 pb-[env(safe-area-inset-bottom,8px)] flex items-center justify-around fixed bottom-0 left-0 right-0 z-50;
+}
+
+.input {
+  @apply bg-white border border-border-medium rounded-xl h-[50px] px-4 font-sans text-[15px] text-text-primary focus:border-[#818CF8] focus:outline-none focus:ring-3 focus:ring-[#818CF8]/15;
+}
+
+.progress-track {
+  @apply h-1 bg-[#E5E5EA] rounded-sm overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-1 bg-gradient-to-r from-[#818CF8] to-[#6366F1] rounded-sm;
+}
+
+.live-badge {
+  @apply flex items-center gap-1.5 text-xs font-semibold text-accent-green tracking-widest uppercase;
+}
+
+.live-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-accent-green;
+}
+
+/* Hide scrollbar inside phone preview iframe */
+html, body {
+  overflow-x: hidden;
+  /* Optional: hide scrollbar visually but keep scroll behaviour */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                /* Chrome/Safari */
+}

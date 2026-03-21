@@ -1,0 +1,5 @@
+{
+  "name": "Khelo India",
+  "description": "A comprehensive sports discovery and fitness assessment platform inspired by Sarvam.ai design language.",
+  "requestFramePermissions": ["geolocation"]
+}
