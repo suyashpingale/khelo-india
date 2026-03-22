@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate, useParams } from 'react-router-dom';
 import { Compass, BookOpen, MapPin, Activity, User, Trophy } from 'lucide-react';
 
 import {
@@ -27,6 +27,14 @@ import {
   EventRegistrationScreen,
   StreakHistoryScreen
 } from './new-features';
+
+import {
+  PhoneWrapper,
+  ScienceHomeScreen,
+  ScienceLessonScreen,
+  ScienceQuizScreen,
+  ScienceResultScreen,
+} from './phone-wrapper-and-science';
 
 function TabBar() {
   const navigate = useNavigate();
@@ -88,11 +96,37 @@ function TabBar() {
   );
 }
 
+function ScienceHomeRoute() {
+  const { sportId } = useParams();
+  const navigate = useNavigate();
+  return <ScienceHomeScreen sportId={sportId} onLesson={(l) => navigate(`/learn/${sportId}/science/${l.id}`, { state: { lesson: l } })} onBack={() => navigate(-1)} />;
+}
+
+function ScienceLessonRoute() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  return <ScienceLessonScreen lesson={state?.lesson} onQuiz={() => navigate('quiz', { state })} onBack={() => navigate(-1)} />;
+}
+
+function ScienceQuizRoute() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  return <ScienceQuizScreen lesson={state?.lesson} onResult={(correct, xp) => navigate('result', { state: { ...state, correct, xp } })} onBack={() => navigate(-1)} />;
+}
+
+function ScienceResultRoute() {
+  const { sportId } = useParams();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  return <ScienceResultScreen lesson={state?.lesson} correct={state?.correct} xpEarned={state?.xp} onDone={() => navigate(`/learn/${sportId}/science`)} />;
+}
+
 function InnerApp() {
   const navigate = useNavigate();
   return (
-    <div style={{ maxWidth: 480, margin: '0 auto', position: 'relative', minHeight: '100vh', background: '#F2F2F7', overflowX: 'hidden' }}>
-      <Routes>
+    <PhoneWrapper>
+      <div style={{ position: 'relative', minHeight: '100vh', background: '#F2F2F7', overflowX: 'hidden' }}>
+        <Routes>
         <Route path="/" element={<Navigate to="/onboarding/language" replace />} />
         <Route path="/onboarding/language" element={<LanguageSelectScreen onContinue={() => navigate('/onboarding/profile')} />} />
         <Route path="/onboarding/profile"  element={<ProfileSetupScreen onContinue={() => navigate('/onboarding/location')} />} />
@@ -117,9 +151,15 @@ function InnerApp() {
         <Route path="/challenges"                    element={<ChallengesScreen />} />
         <Route path="/play/event/:id/register"       element={<EventRegistrationScreen onBack={() => navigate(-1)} onSuccess={() => navigate('/play')} />} />
         <Route path="/myspace/streak"                element={<StreakHistoryScreen onBack={() => navigate('/myspace')} />} />
+        
+        <Route path="/learn/:sportId/science" element={<ScienceHomeRoute />} />
+        <Route path="/learn/:sportId/science/:lessonId" element={<ScienceLessonRoute />} />
+        <Route path="/learn/:sportId/science/:lessonId/quiz" element={<ScienceQuizRoute />} />
+        <Route path="/learn/:sportId/science/:lessonId/result" element={<ScienceResultRoute />} />
       </Routes>
       <TabBar />
     </div>
+    </PhoneWrapper>
   );
 }
 

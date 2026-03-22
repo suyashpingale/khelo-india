@@ -82,20 +82,21 @@ export function SportDetailScreen() {
         )}
 
         {activeTab === 'Science' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {[
-              { val: '340', unit: 'kcal / hr', label: 'ENERGY BURN' },
-              { val: '18', unit: 'muscles', label: 'MUSCLES ACTIVATED' },
-              { val: '92%', unit: 'focus', label: 'MENTAL AGILITY' },
-            ].map(stat => (
-              <Card key={stat.label} style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: '16px 20px' }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                  <span style={{ fontFamily: T.fontSerif, fontSize: 32, fontWeight: 400, color: T.textPrimary, lineHeight: 1 }}>{stat.val}</span>
-                  <span style={{ fontFamily: T.fontSans, fontSize: 14, color: T.textSecond }}>{stat.unit}</span>
-                </div>
-                <SectionLabel style={{ marginTop: 4 }}>{stat.label}</SectionLabel>
-              </Card>
-            ))}
+          <div style={{ padding:'20px 0' }}>
+            <p style={{ fontFamily:"'Inter',sans-serif", fontSize:14,
+              color:'#6B6B7B', lineHeight:1.7, marginBottom:16 }}>
+              Understand the physics and biomechanics behind {sportId || sportName}.
+              3 lessons · 5 minutes each · earn badges.
+            </p>
+            <button
+              onClick={() => navigate(`/learn/${sportId || 'Badminton'}/science`)}
+              style={{ width:'100%', background:'#0F0F12', color:'#fff',
+                border:'none', borderRadius:9999, padding:'14px 28px',
+                fontFamily:"'Inter',sans-serif", fontSize:16, fontWeight:600,
+                cursor:'pointer' }}
+            >
+              Start science lessons →
+            </button>
           </div>
         )}
       </div>
