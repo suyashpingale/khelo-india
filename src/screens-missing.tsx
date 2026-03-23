@@ -218,55 +218,94 @@ export function OnboardingLocationScreen() {
 // Re-creating Discover Screen locally here since we delete it from App.tsx
 export function DiscoverScreen() {
   const navigate = useNavigate();
+
+  const event1 = { title: 'District Athletics Trial', sport: 'Athletics', date: 'Mar 28, 2026', venue: 'Nehru Stadium, Bhopal', organiser: 'Sports Authority', fee: 'Free', slots: 48, remaining: 12 };
+  const event2 = { title: 'Kho-Kho Open Camp', sport: 'Kho-Kho', date: 'Apr 2, 2026', venue: 'SAI Centre, Bhopal', organiser: 'Kho-Kho Association', fee: '100', slots: 32, remaining: 5 };
+
   return (
     <div style={{ minHeight: '100vh', background: T.bgPage, paddingBottom: 100 }}>
-      {/* Recreating the Discover screen from App.tsx using our components */}
-      <HeroStrip height={220} style={{ paddingBottom: 0, alignItems: 'center', justifyContent: 'center' }}>
-         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-           <ScrollMotif size={80}/>
-           <span style={{ fontFamily: T.fontSerif, fontStyle: 'italic', fontSize: 18, color: T.textPrimary }}>KHELO INDIA</span>
-         </div>
-         <div style={{ width: '100%', padding: '0 24px 24px' }}>
-           <h1 style={{ fontFamily: T.fontSans, fontSize: 26, fontWeight: 400, color: T.textPrimary, margin: 0 }}>Namaskar, Arjun</h1>
-         </div>
-      </HeroStrip>
+      {/* Header row */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #EEE', padding: '14px 16px 11px', background: '#fff' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontFamily: T.fontSans, fontSize: 10.8, color: '#888' }}>Good morning,</span>
+          <span style={{ fontFamily: T.fontSans, fontSize: 12.3, color: '#111', fontWeight: 600 }}>Arjun 👋</span>
+        </div>
+        <div style={{ width: 36, height: 36, background: '#E6F1FB', color: '#0C447C', borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 600, fontFamily: T.fontSans }}>
+          AK
+        </div>
+      </div>
       
       <div style={{ padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: 32 }}>
+         {/* 1. Today's challenge streak card */}
+         <section>
+           <div style={{ background: '#111111', borderRadius: 14, padding: 16, width: '100%' }}>
+             <div style={{ display: 'inline-block', background: '#FEF0E7', color: '#993C1D', borderRadius: 20, padding: '3px 8px', fontSize: 10, fontFamily: T.fontSans, fontWeight: 500, marginBottom: 12 }}>
+               Today's challenge
+             </div>
+             <h3 style={{ fontSize: 16, color: '#fff', fontFamily: T.fontSans, margin: '0 0 4px 0', fontWeight: 600 }}>7-day sprint streak</h3>
+             <p style={{ fontSize: 11.8, color: '#AAA', fontFamily: T.fontSans, margin: '0 0 16px 0' }}>Day 4 of 7 — keep going!</p>
+             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+               <div style={{ height: 6, flex: 1, background: '#333', borderRadius: 3, overflow: 'hidden' }}>
+                 <div style={{ width: '57%', height: '100%', background: '#E85D24', borderRadius: 3 }} />
+               </div>
+               <span style={{ fontSize: 10, color: '#888', fontFamily: T.fontSans }}>4 / 7 days</span>
+             </div>
+           </div>
+         </section>
+
+         {/* 2. Sport of the week */}
          <section>
             <SectionLabel style={{ marginBottom: 16 }}>This Week</SectionLabel>
-            <div style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', background: T.illusBlue, height: 160 }}>
-              <DomeIllustration />
-              <div style={{ position: 'absolute', top: 16, right: 16 }}>
-                 <span style={{ background: '#fff', color: T.accentIndigo, padding: '4px 12px', borderRadius: 9999, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em' }}>SPOTLIGHT</span>
+            <div onClick={() => navigate('/learn/kabaddi')} style={{ background: '#fff', border: '1px solid #EEE', borderLeft: '3px solid #E85D24', borderRadius: '0 14px 14px 0', padding: '13px 15px 13px 17px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: 14, color: '#111', fontFamily: T.fontSans, fontWeight: 600 }}>Kabaddi</span>
+                <span style={{ fontSize: 12, color: '#666', fontFamily: T.fontSans, lineHeight: '18px' }}>Learn the science behind a raid</span>
               </div>
-              <div style={{ position: 'absolute', bottom: 12, right: 16, color: '#fff', fontSize: 12, fontWeight: 500 }} onClick={() => navigate('/learn/badminton')}>Learn more →</div>
+              <span style={{ background: '#FEF0E7', color: '#993C1D', fontSize: 10, borderRadius: 20, padding: '4px 10px', fontFamily: T.fontSans, fontWeight: 500 }}>New lesson</span>
             </div>
          </section>
-         <div style={{ padding: '0 0px' }}>
-           <SectionLabel style={{ marginBottom: 10 }}>Training streak</SectionLabel>
-           <StreakWidget currentStreak={4} longestStreak={12} />
-         </div>
 
+         {/* 3. Nearby events */}
          <section>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
               <SectionLabel>Events Near You</SectionLabel>
               <button style={{ fontSize: 12, fontWeight: 500, color: T.accentIndigo, background: 'none', border: 'none' }}>View all</button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-               {[
-                 { title: 'State Kabaddi Trials', sport: 'Kabaddi', date: '24 Mar', dist: '2.4 km', venue: 'Shree Shiv Chhatrapati, Pune', organiser: 'Maharashtra Sports Authority', fee: 'Free', slots: 48, remaining: 12 },
-                 { title: 'Open Wrestling Meet', sport: 'Wrestling', date: '26 Mar', dist: '4.1 km', venue: 'National Sports Arena', organiser: 'Wrestling Federation of India', fee: '100', slots: 32, remaining: 5 }
-               ].map((event, i) => (
-                 <div key={i} onClick={() => navigate('/play/event/1/register', { state: event })} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${T.borderLight}`, cursor: 'pointer' }}>
-                   <div>
-                     <h3 style={{ fontSize: 14, fontWeight: 500, margin: '0 0 4px 0', color: T.textPrimary }}>{event.title}</h3>
-                     <span style={{ fontSize: 12, color: T.textSecond }}>{event.date}</span>
-                   </div>
-                   <span style={{ background: '#fff', border: `1px solid ${T.borderMed}`, borderRadius: 9999, padding: '4px 12px', fontSize: 11, fontWeight: 500 }}>{event.dist}</span>
+               <div onClick={() => navigate('/play/event/1/register', { state: event1 })} style={{ background: '#fff', border: '1px solid #EEE', borderRadius: 14, padding: 15, cursor: 'pointer' }}>
+                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                   <span style={{ fontSize: 14, color: '#111', fontFamily: T.fontSans, fontWeight: 600 }}>District Athletics Trial</span>
+                   <span style={{ background: '#EAF3DE', color: '#3B6D11', borderRadius: 9999, padding: '3px 10px', fontSize: 11, fontFamily: T.fontSans, fontWeight: 600 }}>2.3 km</span>
                  </div>
-               ))}
+                 <div style={{ fontSize: 12, color: '#666', fontFamily: T.fontSans, lineHeight: '18px' }}>Mar 28 · Nehru Stadium, Bhopal</div>
+               </div>
+               <div onClick={() => navigate('/play/event/2/register', { state: event2 })} style={{ background: '#fff', border: '1px solid #EEE', borderRadius: 14, padding: 15, cursor: 'pointer' }}>
+                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                   <span style={{ fontSize: 14, color: '#111', fontFamily: T.fontSans, fontWeight: 600 }}>Kho-Kho Open Camp</span>
+                   <span style={{ background: '#E6F1FB', color: '#0C447C', borderRadius: 9999, padding: '3px 10px', fontSize: 11, fontFamily: T.fontSans, fontWeight: 600 }}>4.1 km</span>
+                 </div>
+                 <div style={{ fontSize: 12, color: '#666', fontFamily: T.fontSans, lineHeight: '18px' }}>Apr 2 · SAI Centre, Bhopal</div>
+               </div>
             </div>
          </section>
+
+         {/* 4. Para Athlete spotlight */}
+         <section>
+           <SectionLabel style={{ marginBottom: 16 }}>PARA ATHLETE SPOTLIGHT</SectionLabel>
+           <div style={{ background: '#111', borderRadius: 14, padding: 16, display: 'flex', gap: 12, alignItems: 'center' }}>
+             <div style={{ width: 52, height: 52, background: '#E85D24', borderRadius: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+               <span style={{ fontSize: 18, color: '#fff', fontFamily: T.fontSans, fontWeight: 600 }}>SR</span>
+             </div>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+               <span style={{ fontSize: 13, color: '#fff', fontFamily: T.fontSans, fontWeight: 600 }}>Suresh Rana</span>
+               <span style={{ fontSize: 11, color: '#AAA', fontFamily: T.fontSans }}>Para-Athletics · T44</span>
+               <div style={{ marginTop: 4 }}>
+                 <span style={{ display: 'inline-block', background: '#FEF0E7', color: '#993C1D', fontSize: 9.8, borderRadius: 20, padding: '3px 8px', fontFamily: T.fontSans, fontWeight: 600 }}>National gold 2024</span>
+               </div>
+             </div>
+           </div>
+         </section>
+
       </div>
     </div>
   );

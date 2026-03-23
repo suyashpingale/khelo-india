@@ -25,20 +25,20 @@ const T = {
   textTert:    '#9090A0',
   borderLight: 'rgba(0,0,0,0.06)',
   borderMed:   '#D1D1D8',
-  indigo:      '#4338CA',
-  indigoBg:    '#EEF2FF',
-  indigoBorder:'#C7D2FE',
+  indigo:      '#E85D24',
+  indigoBg:    '#FEF0E7',
+  indigoBorder:'#F5C4AA',
   green:       '#16A34A',
   orange:      '#F97316',
   amber:       '#D97706',
   amberBg:     '#FEF3C7',
-  illusBlue:   'linear-gradient(160deg,#C7D2FE 0%,#818CF8 100%)',
+  illusBlue:   'linear-gradient(160deg,#F5C4AA 0%,#E85D24 100%)',
   illusOrange: 'linear-gradient(135deg,#FED7AA 0%,#F97316 60%,#EA580C 100%)',
   illusGreen:  'linear-gradient(135deg,#BBF7D0 0%,#4ADE80 50%,#16A34A 100%)',
   illusViolet: 'linear-gradient(135deg,#E9D5FF 0%,#A855F7 60%,#7E22CE 100%)',
   heroGrad:    `radial-gradient(ellipse 60% 55% at 50% -5%,#F97316 0%,#FB923C 25%,transparent 65%),
-                radial-gradient(ellipse 45% 55% at -5% 50%,#C7D2FE 0%,transparent 60%),
-                radial-gradient(ellipse 45% 55% at 105% 50%,#C7D2FE 0%,transparent 60%)`,
+                radial-gradient(ellipse 45% 55% at -5% 50%,#F5C4AA 0%,transparent 60%),
+                radial-gradient(ellipse 45% 55% at 105% 50%,#F5C4AA 0%,transparent 60%)`,
   serif:       "'Lora',Georgia,serif",
   sans:        "'Inter',system-ui,sans-serif",
 };
@@ -80,9 +80,9 @@ const Pill = ({ children, color=T.indigo, bg=T.indigoBg, border=T.indigoBorder }
 );
 
 const Label = ({ children, style={} }) => (
-  <p style={{ fontFamily:T.sans, fontSize:11, fontWeight:500,
-    letterSpacing:'0.07em', textTransform:'uppercase',
-    color:T.textTert, ...style }}>
+  <p style={{ fontFamily:T.sans, fontSize:10, fontWeight:500,
+    letterSpacing:'0.6px', textTransform:'uppercase',
+    color:'#888888', ...style }}>
     {children}
   </p>
 );
@@ -91,7 +91,7 @@ const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
   <button onClick={onClick} disabled={disabled} style={{
     background: disabled ? '#D1D1D8' : '#0F0F12',
     color: disabled ? '#9090A0' : '#fff',
-    border:'none', borderRadius:9999, padding:'14px 28px',
+    border:'none', borderRadius:12, padding:'14px 28px',
     width:'100%', fontFamily:T.sans, fontSize:16, fontWeight:600,
     letterSpacing:'-0.01em', cursor: disabled ? 'not-allowed' : 'pointer', ...style,
   }}>{children}</button>
@@ -100,7 +100,7 @@ const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
 const BtnSecondary = ({ children, onClick, style={} }) => (
   <button onClick={onClick} style={{
     background:T.bgCard, color:T.textPrimary,
-    border:`1px solid ${T.borderMed}`, borderRadius:9999,
+    border:`1px solid ${T.borderMed}`, borderRadius:12,
     padding:'14px 28px', width:'100%',
     fontFamily:T.sans, fontSize:16, fontWeight:400, cursor:'pointer', ...style,
   }}>{children}</button>
@@ -408,7 +408,7 @@ const LESSONS = {
 };
 
 const TIER_COLORS = {
-  Curious:  { bg:'#EEF2FF', border:'#C7D2FE', text:'#4338CA', dot:'#818CF8' },
+  Curious:  { bg:'#FEF0E7', border:'#F5C4AA', text:'#E85D24', dot:'#E85D24' },
   Explorer: { bg:'#FEF3C7', border:'#FDE68A', text:'#92400E', dot:'#F59E0B' },
   Athlete:  { bg:'#DCFCE7', border:'#86EFAC', text:'#166534', dot:'#22C55E' },
 };
@@ -842,28 +842,28 @@ function SportIllustration({ type }) {
             <stop offset="100%" stopColor="#818CF8"/>
           </linearGradient>
         </defs>
-        <rect x="0" y="0" width="340" height="140" rx="14" fill="#EEF2FF"/>
+        <rect x="0" y="0" width="340" height="140" rx="14" fill="#FEF0E7"/>
         {/* Racket arm */}
-        <line x1="60" y1="110" x2="130" y2="50" stroke="#818CF8" strokeWidth="6"
+        <line x1="60" y1="110" x2="130" y2="50" stroke="#E85D24" strokeWidth="6"
           strokeLinecap="round"/>
         <ellipse cx="138" cy="42" rx="18" ry="28" fill="none"
-          stroke="#818CF8" strokeWidth="3" transform="rotate(-30 138 42)"/>
+          stroke="#E85D24" strokeWidth="3" transform="rotate(-30 138 42)"/>
         {/* Shuttlecock */}
         <circle cx="210" cy="60" r="8" fill="#F97316"/>
         <path d="M210 52 L218 30 M210 52 L224 38 M210 52 L228 52"
           stroke="#F97316" strokeWidth="1.5" strokeLinecap="round"/>
         {/* Velocity arrow */}
-        <path d="M222 60 L290 60" stroke="#4338CA" strokeWidth="2"
+        <path d="M222 60 L290 60" stroke="#E85D24" strokeWidth="2"
           strokeLinecap="round" markerEnd="url(#arr)"/>
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5"
             markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#4338CA"
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#E85D24"
               strokeWidth="1.5" strokeLinecap="round"/>
           </marker>
         </defs>
         <text x="256" y="52" fontFamily="Inter,sans-serif"
-          fontSize="11" fill="#4338CA" fontWeight="600">v = 400 km/h</text>
+          fontSize="11" fill="#E85D24" fontWeight="600">v = 400 km/h</text>
         <text x="80" y="130" fontFamily="Inter,sans-serif"
           fontSize="11" fill="#6B6B7B">Force → velocity transfers on contact</text>
       </svg>

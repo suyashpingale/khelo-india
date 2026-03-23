@@ -23,14 +23,14 @@ export const T = {
   textTertiary: '#9090A0',
   borderLight:  'rgba(0,0,0,0.06)',
   borderMed:    '#D1D1D8',
-  accentIndigo: '#4338CA',
+  accentIndigo: '#E85D24',
   accentGreen:  '#16A34A',
-  pillBg:       '#EEF2FF',
-  pillBorder:   '#C7D2FE',
-  pillText:     '#4338CA',
+  pillBg:       '#FEF0E7',
+  pillBorder:   '#F5C4AA',
+  pillText:     '#E85D24',
 
   // Illustration gradients
-  illusBlue:   'linear-gradient(160deg, #C7D2FE 0%, #818CF8 100%)',
+  illusBlue:   'linear-gradient(160deg, #F5C4AA 0%, #E85D24 100%)',
   illusOrange: 'linear-gradient(135deg, #FED7AA 0%, #F97316 60%, #EA580C 100%)',
   illusGreen:  'linear-gradient(135deg, #BBF7D0 0%, #4ADE80 50%, #16A34A 100%)',
   illusViolet: 'linear-gradient(135deg, #E9D5FF 0%, #A855F7 60%, #7E22CE 100%)',
@@ -39,8 +39,8 @@ export const T = {
   // Hero gradient (applied to screen top)
   heroGradient: `
     radial-gradient(ellipse 60% 55% at 50% -5%, #F97316 0%, #FB923C 25%, transparent 65%),
-    radial-gradient(ellipse 45% 55% at -5% 50%, #C7D2FE 0%, transparent 60%),
-    radial-gradient(ellipse 45% 55% at 105% 50%, #C7D2FE 0%, transparent 60%)
+    radial-gradient(ellipse 45% 55% at -5% 50%, #F5C4AA 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 105% 50%, #F5C4AA 0%, transparent 60%)
   `,
 
   // Typography
@@ -131,7 +131,7 @@ export const BtnPrimary = ({ children, onClick, disabled = false, style = {} }) 
     background: disabled ? '#D1D1D8' : '#0F0F12',
     color: disabled ? '#9090A0' : '#FFFFFF',
     border: 'none',
-    borderRadius: 9999,
+    borderRadius: 12,
     padding: '14px 28px',
     width: '100%',
     fontFamily: T.fontSans,
@@ -150,7 +150,7 @@ export const BtnSecondary = ({ children, onClick, style = {} }) => (
     background: '#FFFFFF',
     color: '#0F0F12',
     border: `1px solid ${T.borderMed}`,
-    borderRadius: 9999,
+    borderRadius: 12,
     padding: '14px 28px',
     width: '100%',
     fontFamily: T.fontSans,
@@ -175,9 +175,8 @@ export const BadgePill = ({ children }) => (
   }}>{children}</span>
 );
 
-/** Section label — uppercase small */
 export const SectionLabel = ({ children, style = {} }) => (
-  <p style={{ fontFamily: T.fontSans, fontSize: 11, fontWeight: 500, letterSpacing: '0.07em', textTransform: 'uppercase', color: T.textTertiary, ...style }}>{children}</p>
+  <p style={{ fontFamily: T.fontSans, fontSize: 10, fontWeight: 500, letterSpacing: '0.6px', textTransform: 'uppercase', color: '#888888', ...style }}>{children}</p>
 );
 
 /** White card */
@@ -196,54 +195,45 @@ export const ProgressBar = ({ value = 0 }) => (
 // SCREEN 1: Language Select
 // ─────────────────────────────────────────────
 export function LanguageSelectScreen({ onContinue }) {
-  const [selected, setSelected] = useState(null);
-  const languages = ['Hindi','English','Tamil','Telugu','Kannada','Malayalam','Marathi','Bengali','Gujarati','Punjabi','Odia','Assamese','Urdu','Nepali','Manipuri','Bodo','Dogri','Santali'];
-
   return (
-    <div style={{ minHeight: '100vh', background: T.bgPage, display: 'flex', flexDirection: 'column' }}>
-      {/* Hero */}
-      <HeroStrip height={220} style={{ flexShrink: 0 }}>
-        <div style={{ position: 'absolute', top: 70, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-          <ScrollMotif size={88}/>
-          <BadgePill>Khelo India</BadgePill>
-        </div>
-      </HeroStrip>
+    <div style={{ minHeight: '100vh', background: '#FFFFFF', display: 'flex', flexDirection: 'column' }}>
+      
+      {/* Top section */}
+      <div style={{ padding: '60px 24px 20px', display: 'flex', flexDirection: 'column' }}>
+        <h1 style={{ fontFamily: T.fontSans, fontSize: 22, fontWeight: 400, margin: 0, color: '#111' }}>
+          Welcome to<br/>
+          <span style={{ color: '#E85D24' }}>Khelo India</span>
+        </h1>
+        <p style={{ fontFamily: T.fontSans, fontSize: 12, color: '#666', marginTop: 12, marginBottom: 32 }}>
+          Let's set up your profile in 3 steps
+        </p>
 
-      {/* Content */}
-      <div style={{ flex: 1, padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontFamily: T.fontSerif, fontSize: 28, fontWeight: 400, color: T.textPrimary, letterSpacing: '-0.02em', marginBottom: 8 }}>
-            Khel bado. Bharat bado.
-          </h1>
-          <p style={{ fontFamily: T.fontSans, fontSize: 14, color: T.textSecond, lineHeight: 1.6 }}>
-            Choose your language to begin.
-          </p>
-        </div>
-
-        {/* Language grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
-          {languages.map(lang => (
-            <button key={lang} onClick={() => setSelected(lang)} style={{
-              background: selected === lang ? T.pillBg : T.bgCard,
-              color: selected === lang ? T.accentIndigo : T.textPrimary,
-              border: `${selected === lang ? '1.5px' : '1px'} solid ${selected === lang ? T.accentIndigo : T.borderMed}`,
-              borderRadius: 12,
-              padding: '11px 8px',
-              fontFamily: T.fontSans,
-              fontSize: 14,
-              fontWeight: selected === lang ? 600 : 400,
-              cursor: 'pointer',
-              transition: 'all .15s',
-            }}>{lang}</button>
-          ))}
+        {/* Step progress bar */}
+        <div style={{ display: 'flex', gap: 6, width: '100%' }}>
+          <div style={{ height: 3, flex: 1, background: '#E85D24', borderRadius: 2 }}/>
+          <div style={{ height: 3, flex: 1, background: '#EEEEEE', borderRadius: 2 }}/>
+          <div style={{ height: 3, flex: 1, background: '#EEEEEE', borderRadius: 2 }}/>
         </div>
       </div>
 
+      <div style={{ flex: 1 }} />
+
       {/* CTA */}
-      <div style={{ padding: '0 16px 40px', flexShrink: 0 }}>
-        <BtnPrimary disabled={!selected} onClick={() => onContinue?.(selected)}>
+      <div style={{ padding: '0 24px 40px', flexShrink: 0 }}>
+        <button onClick={onContinue} style={{
+          background: '#E85D24',
+          color: '#FFFFFF',
+          border: 'none',
+          borderRadius: 12,
+          padding: '13px',
+          width: '100%',
+          fontFamily: T.fontSans,
+          fontSize: 16,
+          fontWeight: 600,
+          cursor: 'pointer'
+        }}>
           Continue →
-        </BtnPrimary>
+        </button>
       </div>
     </div>
   );

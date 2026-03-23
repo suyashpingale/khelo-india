@@ -78,17 +78,18 @@ function TabBar() {
             style={{ 
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
               background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer',
-              color: isActive ? '#4338CA' : '#9090A0',
+              color: isActive ? '#111' : '#888',
               flex: 1
             }}
           >
-            <Icon size={22} strokeWidth={1.5} color={isActive ? '#4338CA' : '#9090A0'} />
+            <Icon size={22} strokeWidth={1.5} color={isActive ? '#111' : '#888'} />
             <span style={{ 
               fontSize: 10, fontFamily: "'Inter', sans-serif", fontWeight: 500, 
               textTransform: 'uppercase', letterSpacing: '0.04em' 
             }}>
               {tab.label}
             </span>
+            {isActive && <div style={{width: 4, height: 4, background: '#E85D24', borderRadius: 2, margin: '2px auto 0'}}/>}
           </button>
         );
       })}

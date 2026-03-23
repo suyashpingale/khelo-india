@@ -19,19 +19,19 @@ const T = {
   textTertiary: '#9090A0',
   borderLight:  'rgba(0,0,0,0.06)',
   borderMed:    '#D1D1D8',
-  accentIndigo: '#4338CA',
+  accentIndigo: '#E85D24',
   accentGreen:  '#16A34A',
-  pillBg:       '#EEF2FF',
-  pillBorder:   '#C7D2FE',
-  pillText:     '#4338CA',
-  illusBlue:    'linear-gradient(160deg, #C7D2FE 0%, #818CF8 100%)',
+  pillBg:       '#FEF0E7',
+  pillBorder:   '#F5C4AA',
+  pillText:     '#E85D24',
+  illusBlue:    'linear-gradient(160deg, #F5C4AA 0%, #E85D24 100%)',
   illusOrange:  'linear-gradient(135deg, #FED7AA 0%, #F97316 60%, #EA580C 100%)',
   illusGreen:   'linear-gradient(135deg, #BBF7D0 0%, #4ADE80 50%, #16A34A 100%)',
   illusViolet:  'linear-gradient(135deg, #E9D5FF 0%, #A855F7 60%, #7E22CE 100%)',
   illusRed:     'linear-gradient(135deg, #FECACA 0%, #F87171 50%, #DC2626 100%)',
   heroGradient: `radial-gradient(ellipse 60% 55% at 50% -5%, #F97316 0%, #FB923C 25%, transparent 65%),
-                 radial-gradient(ellipse 45% 55% at -5% 50%, #C7D2FE 0%, transparent 60%),
-                 radial-gradient(ellipse 45% 55% at 105% 50%, #C7D2FE 0%, transparent 60%)`,
+                 radial-gradient(ellipse 45% 55% at -5% 50%, #F5C4AA 0%, transparent 60%),
+                 radial-gradient(ellipse 45% 55% at 105% 50%, #F5C4AA 0%, transparent 60%)`,
   fontSerif:    "'Lora', Georgia, serif",
   fontSans:     "'Inter', system-ui, sans-serif",
 };
@@ -59,7 +59,7 @@ const BadgePill = ({ children, color = T.pillText, bg = T.pillBg, border = T.pil
 );
 
 const SectionLabel = ({ children, style={} }) => (
-  <p style={{ fontFamily:T.fontSans, fontSize:11, fontWeight:500, letterSpacing:'0.07em', textTransform:'uppercase', color:T.textTertiary, ...style }}>{children}</p>
+  <p style={{ fontFamily:T.fontSans, fontSize:10, fontWeight:500, letterSpacing:'0.6px', textTransform:'uppercase', color:'#888888', ...style }}>{children}</p>
 );
 
 const Card = ({ children, style={}, onClick }) => (
@@ -73,11 +73,11 @@ const ProgressBar = ({ value=0, color='linear-gradient(90deg, #818CF8, #6366F1)'
 );
 
 const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
-  <button onClick={onClick} disabled={disabled} style={{ background:disabled?'#D1D1D8':'#0F0F12', color:disabled?'#9090A0':'#FFFFFF', border:'none', borderRadius:9999, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:600, letterSpacing:'-0.01em', cursor:disabled?'not-allowed':'pointer', ...style }}>{children}</button>
+  <button onClick={onClick} disabled={disabled} style={{ background:disabled?'#D1D1D8':'#0F0F12', color:disabled?'#9090A0':'#FFFFFF', border:'none', borderRadius:12, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:600, letterSpacing:'-0.01em', cursor:disabled?'not-allowed':'pointer', ...style }}>{children}</button>
 );
 
 const BtnSecondary = ({ children, onClick, style={} }) => (
-  <button onClick={onClick} style={{ background:T.bgCard, color:T.textPrimary, border:`1px solid ${T.borderMed}`, borderRadius:9999, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:400, cursor:'pointer', ...style }}>{children}</button>
+  <button onClick={onClick} style={{ background:T.bgCard, color:T.textPrimary, border:`1px solid ${T.borderMed}`, borderRadius:12, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:400, cursor:'pointer', ...style }}>{children}</button>
 );
 
 // ─────────────────────────────────────────────
