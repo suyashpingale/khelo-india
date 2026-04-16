@@ -15,6 +15,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ─── DESIGN TOKENS (same as screens.jsx) ────────────────────────────────────
 const T = {
@@ -25,20 +26,20 @@ const T = {
   textTert:    '#9090A0',
   borderLight: 'rgba(0,0,0,0.06)',
   borderMed:   '#D1D1D8',
-  indigo:      '#E85D24',
-  indigoBg:    '#FEF0E7',
-  indigoBorder:'#F5C4AA',
+  indigo:      '#4338CA',
+  indigoBg:    '#EEF2FF',
+  indigoBorder:'#C7D2FE',
   green:       '#16A34A',
   orange:      '#F97316',
   amber:       '#D97706',
   amberBg:     '#FEF3C7',
-  illusBlue:   'linear-gradient(160deg,#F5C4AA 0%,#E85D24 100%)',
+  illusBlue:   'linear-gradient(160deg,#C7D2FE 0%,#818CF8 100%)',
   illusOrange: 'linear-gradient(135deg,#FED7AA 0%,#F97316 60%,#EA580C 100%)',
   illusGreen:  'linear-gradient(135deg,#BBF7D0 0%,#4ADE80 50%,#16A34A 100%)',
   illusViolet: 'linear-gradient(135deg,#E9D5FF 0%,#A855F7 60%,#7E22CE 100%)',
   heroGrad:    `radial-gradient(ellipse 60% 55% at 50% -5%,#F97316 0%,#FB923C 25%,transparent 65%),
-                radial-gradient(ellipse 45% 55% at -5% 50%,#F5C4AA 0%,transparent 60%),
-                radial-gradient(ellipse 45% 55% at 105% 50%,#F5C4AA 0%,transparent 60%)`,
+                radial-gradient(ellipse 45% 55% at -5% 50%,#C7D2FE 0%,transparent 60%),
+                radial-gradient(ellipse 45% 55% at 105% 50%,#C7D2FE 0%,transparent 60%)`,
   serif:       "'Lora',Georgia,serif",
   sans:        "'Inter',system-ui,sans-serif",
 };
@@ -80,9 +81,9 @@ const Pill = ({ children, color=T.indigo, bg=T.indigoBg, border=T.indigoBorder }
 );
 
 const Label = ({ children, style={} }) => (
-  <p style={{ fontFamily:T.sans, fontSize:10, fontWeight:500,
-    letterSpacing:'0.6px', textTransform:'uppercase',
-    color:'#888888', ...style }}>
+  <p style={{ fontFamily:T.sans, fontSize:11, fontWeight:500,
+    letterSpacing:'0.07em', textTransform:'uppercase',
+    color:T.textTert, ...style }}>
     {children}
   </p>
 );
@@ -91,7 +92,7 @@ const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
   <button onClick={onClick} disabled={disabled} style={{
     background: disabled ? '#D1D1D8' : '#0F0F12',
     color: disabled ? '#9090A0' : '#fff',
-    border:'none', borderRadius:12, padding:'14px 28px',
+    border:'none', borderRadius:9999, padding:'14px 28px',
     width:'100%', fontFamily:T.sans, fontSize:16, fontWeight:600,
     letterSpacing:'-0.01em', cursor: disabled ? 'not-allowed' : 'pointer', ...style,
   }}>{children}</button>
@@ -100,7 +101,7 @@ const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
 const BtnSecondary = ({ children, onClick, style={} }) => (
   <button onClick={onClick} style={{
     background:T.bgCard, color:T.textPrimary,
-    border:`1px solid ${T.borderMed}`, borderRadius:12,
+    border:`1px solid ${T.borderMed}`, borderRadius:9999,
     padding:'14px 28px', width:'100%',
     fontFamily:T.sans, fontSize:16, fontWeight:400, cursor:'pointer', ...style,
   }}>{children}</button>
@@ -114,6 +115,7 @@ const BtnSecondary = ({ children, onClick, style={} }) => (
 // ══════════════════════════════════════════════════════════════════════════════
 
 export function PhoneWrapper({ children }) {
+  const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' && window.innerWidth <= 480
   );
@@ -166,7 +168,7 @@ export function PhoneWrapper({ children }) {
         ].map(([label, path]) => (
           <button
             key={label}
-            onClick={() => window.history.pushState({}, '', path) && window.dispatchEvent(new PopStateEvent('popstate'))}
+            onClick={() => navigate(path)}
             style={{
               background:'#2C2C2E', color:'#E5E5EA',
               border:'1px solid #3A3A3C', borderRadius:9999,
@@ -408,7 +410,7 @@ const LESSONS = {
 };
 
 const TIER_COLORS = {
-  Curious:  { bg:'#FEF0E7', border:'#F5C4AA', text:'#E85D24', dot:'#E85D24' },
+  Curious:  { bg:'#EEF2FF', border:'#C7D2FE', text:'#4338CA', dot:'#818CF8' },
   Explorer: { bg:'#FEF3C7', border:'#FDE68A', text:'#92400E', dot:'#F59E0B' },
   Athlete:  { bg:'#DCFCE7', border:'#86EFAC', text:'#166534', dot:'#22C55E' },
 };
@@ -842,28 +844,28 @@ function SportIllustration({ type }) {
             <stop offset="100%" stopColor="#818CF8"/>
           </linearGradient>
         </defs>
-        <rect x="0" y="0" width="340" height="140" rx="14" fill="#FEF0E7"/>
+        <rect x="0" y="0" width="340" height="140" rx="14" fill="#EEF2FF"/>
         {/* Racket arm */}
-        <line x1="60" y1="110" x2="130" y2="50" stroke="#E85D24" strokeWidth="6"
+        <line x1="60" y1="110" x2="130" y2="50" stroke="#818CF8" strokeWidth="6"
           strokeLinecap="round"/>
         <ellipse cx="138" cy="42" rx="18" ry="28" fill="none"
-          stroke="#E85D24" strokeWidth="3" transform="rotate(-30 138 42)"/>
+          stroke="#818CF8" strokeWidth="3" transform="rotate(-30 138 42)"/>
         {/* Shuttlecock */}
         <circle cx="210" cy="60" r="8" fill="#F97316"/>
         <path d="M210 52 L218 30 M210 52 L224 38 M210 52 L228 52"
           stroke="#F97316" strokeWidth="1.5" strokeLinecap="round"/>
         {/* Velocity arrow */}
-        <path d="M222 60 L290 60" stroke="#E85D24" strokeWidth="2"
+        <path d="M222 60 L290 60" stroke="#4338CA" strokeWidth="2"
           strokeLinecap="round" markerEnd="url(#arr)"/>
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5"
             markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#E85D24"
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#4338CA"
               strokeWidth="1.5" strokeLinecap="round"/>
           </marker>
         </defs>
         <text x="256" y="52" fontFamily="Inter,sans-serif"
-          fontSize="11" fill="#E85D24" fontWeight="600">v = 400 km/h</text>
+          fontSize="11" fill="#4338CA" fontWeight="600">v = 400 km/h</text>
         <text x="80" y="130" fontFamily="Inter,sans-serif"
           fontSize="11" fill="#6B6B7B">Force → velocity transfers on contact</text>
       </svg>
@@ -950,5 +952,42 @@ function TryItPrompt({ type }) {
       lineHeight:1.7, margin:0 }}>
       {prompts[type] || prompts.force}
     </p>
+  );
+}
+
+export function ProjectileMotionScreen({ onBack, onContinue }) {
+  return (
+    <div style={{ minHeight:'100vh', background: 'linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 20%, #F2F2F7 100%)', display:'flex', flexDirection:'column', padding:'16px', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: 40, marginBottom: 20 }}>
+        <button onClick={onBack} style={{ background:'#fff', border:'none', borderRadius:'50%', width:40, height:40, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, flexShrink:0, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>←</button>
+        <div style={{ marginLeft: 16 }}>
+          <p style={{ fontFamily: T.sans, fontSize: 10, fontWeight: 600, color: '#9090A0', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 2 }}>Curious Level</p>
+          <h1 style={{ fontFamily: T.sans, fontSize: 18, fontWeight: 500, color: '#0F0F12', margin: 0 }}>Projectile Motion</h1>
+        </div>
+      </div>
+
+      <Card style={{ padding: '20px', borderRadius: 20, marginBottom: 16, border: '1px solid #E5E5EA', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
+        <p style={{ fontFamily: T.sans, fontSize: 11, fontWeight: 600, color: '#4338CA', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>THE QUESTION</p>
+        <h2 style={{ fontFamily: T.sans, fontSize: 22, fontWeight: 400, color: '#0F0F12', lineHeight: 1.3, marginBottom: 12 }}>Why does the ball cover the maximum angle when kicked at an angle of 45°?</h2>
+        <p style={{ fontFamily: T.sans, fontSize: 14, color: '#6B6B7B', lineHeight: 1.5, margin: 0 }}>The football covers maximum range when kicked at angle of 45°.</p>
+      </Card>
+
+      <div style={{ borderRadius: 20, overflow: 'hidden', marginBottom: 24, boxShadow: '0 4px 12px rgba(0,0,0,0.05)', position: 'relative' }}>
+        <img src="/trajectory.png" style={{ width: '100%', display: 'block', height: 220, objectFit: 'cover' }} alt="Trajectory" />
+      </div>
+
+      <div style={{ marginTop: 'auto', position: 'relative', paddingBottom: 24 }}>
+        <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '16px 16px 16px 4px', padding: '16px', width: '80%', position: 'relative', zIndex: 2, top: 20 }}>
+          <p style={{ fontFamily: T.sans, fontStyle: 'italic', fontSize: 15, color: '#6B6B7B', margin: 0, lineHeight: 1.5 }}>"Next time you step onto the field, try kicking the ball at different angles and see how far it travels!"</p>
+        </div>
+        <img src="/mascot.png" style={{ position: 'absolute', right: -10, bottom: 44, width: 140, height: 180, objectFit: 'contain', zIndex: 1 }} alt="Mascot" />
+        <div style={{ marginTop: 40, position: 'relative', zIndex: 3 }}>
+          <button onClick={onContinue} style={{ width: '100%', background: '#0F0F12', color: '#fff', padding: '18px 24px', borderRadius: 9999, border: 'none', fontFamily: T.sans, fontSize: 18, fontWeight: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+            <span>Continue Learning</span>
+            <span style={{ fontSize: 24 }}>✨</span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
