@@ -2,15 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ─── Figma Asset URLs (node 2132:3274) ───
-const IMG_T20_NEWS      = "/img/home-t20-news.jpg";
-const IMG_TILTED_CARD   = "/img/home-tilted-card.png";
-const IMG_STAR_FILLED   = "/img/home-star-filled.svg";
-const IMG_STAR_EMPTY    = "/img/home-star-empty.svg";
-const IMG_LEARN_ARC     = "/img/home-learn-arc.svg";
-const IMG_ARROW         = "/img/home-arrow.svg";
-const IMG_PARA_VECTOR   = "/img/home-para-vector.svg";
-const IMG_NEWS_VECTOR   = "/img/home-news-vector.svg";
-const IMG_SPORTS_VECTOR = "/img/home-sports-vector.svg";
+const base = import.meta.env.BASE_URL;
+const IMG_T20_NEWS      = `${base}img/home-t20-news.jpg`;
+const IMG_TILTED_CARD   = `${base}img/home-tilted-card.png`;
+const IMG_STAR_FILLED   = `${base}img/home-star-filled.svg`;
+const IMG_STAR_EMPTY    = `${base}img/home-star-empty.svg`;
+const IMG_LEARN_ARC     = `${base}img/home-learn-arc.svg`;
+const IMG_ARROW         = `${base}img/home-arrow.svg`;
+const IMG_PARA_VECTOR   = `${base}img/home-para-vector.svg`;
+const IMG_NEWS_VECTOR   = `${base}img/home-news-vector.svg`;
+const IMG_SPORTS_VECTOR = `${base}img/home-sports-vector.svg`;
 
 export function NewHomeScreen() {
   const navigate = useNavigate();

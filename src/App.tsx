@@ -96,7 +96,7 @@ function InnerApp() {
     <PhoneWrapper>
       <div style={{ position: 'relative', minHeight: '100vh', background: '#F2F2F7' }}>
         <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/onboarding/language" replace />} />
         <Route path="/onboarding/language" element={<LanguageSelectScreen onContinue={() => navigate('/onboarding/welcome')} />} />
         <Route path="/onboarding/welcome" element={<WelcomeScreen />} />
         <Route path="/onboarding/sports-selection" element={<SportsSelectionScreen />} />
@@ -147,7 +147,7 @@ function InnerApp() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <InnerApp />
     </BrowserRouter>
   );
