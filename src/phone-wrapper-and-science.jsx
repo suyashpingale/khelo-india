@@ -165,6 +165,7 @@ export function PhoneWrapper({ children }) {
           ['Science (Badminton)',     '/learn/Badminton/science'],
           ['Science (Cricket)', '/learn/Cricket/science'],
           ['Science (Kabaddi)', '/learn/Kabaddi/science'],
+          ['Learning Module Video', '/learn/football/science/projectile-motion'],
         ].map(([label, path]) => (
           <button
             key={label}
@@ -418,90 +419,74 @@ const TIER_COLORS = {
 // ── Science Home: lists all lessons for a sport ──────────────────────────────
 export function ScienceHomeScreen({ sportId = 'Badminton', onLesson, onBack }) {
   const lessons = LESSONS[sportId] || LESSONS.Badminton;
+  const navigate = useNavigate();
 
   return (
-    <div style={{ minHeight:'100vh', background:T.bgPage,
-      display:'flex', flexDirection:'column', paddingBottom:80 }}>
-
-      <HeroStrip height={190}>
-        <div style={{ position:'absolute', top:55, display:'flex',
-          flexDirection:'column', alignItems:'center', gap:8 }}>
-          <ScrollMotif size={72}/>
-          <Pill>Science behind {sportId}</Pill>
-        </div>
-        <h1 style={{ fontFamily:T.serif, fontSize:24, fontWeight:400,
-          color:T.textPrimary, letterSpacing:'-0.02em',
-          textAlign:'center', padding:'0 16px' }}>
-          Why does {sportId} work?
-        </h1>
-      </HeroStrip>
-
-      <div style={{ padding:'20px 16px', display:'flex',
-        flexDirection:'column', gap:16 }}>
-
-        {/* Intro callout */}
-        <Card style={{ padding:'16px 18px', borderLeft:`3px solid ${T.indigo}` }}>
-          <p style={{ fontFamily:T.sans, fontSize:14, color:T.textSecond,
-            lineHeight:1.7, margin:0 }}>
-            Learn how to play better by understanding the science behind the sport.
-            Each module takes 3–5 minutes and ends with a challenge that earns you XP.
-          </p>
-        </Card>
-
-        {/* Tier legend */}
-        <div style={{ display:'flex', gap:8 }}>
-          {Object.entries(TIER_COLORS).map(([tier, c]) => (
-            <div key={tier} style={{ flex:1, background:c.bg,
-              border:`1px solid ${c.border}`, borderRadius:10,
-              padding:'8px 10px', textAlign:'center' }}>
-              <div style={{ width:8, height:8, borderRadius:'50%',
-                background:c.dot, margin:'0 auto 4px' }}/>
-              <p style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
-                color:c.text, margin:0, letterSpacing:'0.04em' }}>{tier}</p>
-            </div>
-          ))}
+    <div className="min-h-screen bg-[#F2F2F7] flex flex-col pb-32 overflow-hidden">
+      {/* Hero */}
+      <div className="relative h-[300px] w-full shrink-0 flex flex-col items-center justify-end pb-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#E0E7FF] to-[#F2F2F7]" />
+        
+        {/* Top Bar */}
+        <div className="absolute top-14 left-6 right-6 flex justify-between items-center z-10">
+           <button onClick={onBack} className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+             <span className="text-xl">←</span>
+           </button>
+           <h1 className="font-serif text-[18px] font-medium text-[#0F0F12]">Learn</h1>
+           <div className="w-10" />
         </div>
 
-        <Label>Lessons</Label>
+        {/* Mascot */}
+        <div className="relative w-40 h-40 mb-4 group">
+          <div className="absolute inset-0 bg-indigo-200/50 rounded-full blur-2xl group-hover:bg-indigo-300/60 transition-colors" />
+          <div className="absolute inset-0 bg-white rounded-full border-[6px] border-[#EEF2FF] shadow-xl flex items-center justify-center text-5xl overflow-hidden">
+            <img src="/img/mascot.png" className="w-[120%] h-[120%] object-contain" alt="" onError={(e) => { e.currentTarget.style.display='none'; }} />
+            <span className="group-hover:scale-110 transition-transform">🦉</span>
+          </div>
+        </div>
 
+        <h2 className="font-serif text-[28px] font-medium text-[#0F0F12] text-center px-6 leading-tight tracking-tight">
+          The fun way to learn the science behind {sportId}.
+        </h2>
+      </div>
+
+      <div className="px-6 space-y-4 -mt-2 relative z-10">
+        <p className="text-center text-[#6B6B7B] font-medium text-[15px] mb-6">Select a module to begin</p>
+        
         {lessons.map((lesson, i) => {
-          const c = TIER_COLORS[lesson.tier];
+          const colors = [
+            { bg: 'bg-indigo-50', border: 'border-indigo-100', text: 'text-indigo-600' },
+            { bg: 'bg-emerald-50', border: 'border-emerald-100', text: 'text-emerald-600' },
+            { bg: 'bg-amber-50', border: 'border-amber-100', text: 'text-amber-600' },
+          ];
+          const c = colors[i % colors.length];
           return (
-            <Card key={lesson.id} onClick={() => onLesson?.(lesson)}
-              style={{ cursor:'pointer', padding:'16px 18px' }}>
-              <div style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
-                {/* Number */}
-                <div style={{ width:36, height:36, borderRadius:10,
-                  background:c.bg, border:`1px solid ${c.border}`,
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  flexShrink:0 }}>
-                  <span style={{ fontFamily:T.serif, fontSize:16,
-                    fontWeight:400, color:c.text }}>{i+1}</span>
-                </div>
-                <div style={{ flex:1 }}>
-                  <div style={{ display:'flex', alignItems:'center',
-                    gap:8, marginBottom:4 }}>
-                    <span style={{ fontFamily:T.sans, fontSize:14,
-                      fontWeight:600, color:T.textPrimary }}>{lesson.concept}</span>
-                    <span style={{ background:c.bg, color:c.text,
-                      border:`1px solid ${c.border}`, borderRadius:4,
-                      padding:'1px 7px', fontSize:10,
-                      fontWeight:600, letterSpacing:'0.04em' }}>{lesson.tier}</span>
-                  </div>
-                  <p style={{ fontFamily:T.sans, fontSize:12,
-                    color:T.textSecond, margin:0, lineHeight:1.5 }}>
-                    {lesson.hook}
-                  </p>
-                  <div style={{ display:'flex', justifyContent:'space-between',
-                    marginTop:8, alignItems:'center' }}>
-                    <span style={{ fontFamily:T.sans, fontSize:11,
-                      color:T.indigo, fontWeight:500 }}>+{lesson.xp} XP</span>
-                    <span style={{ fontFamily:T.sans, fontSize:11,
-                      color:T.textTert }}>3 min →</span>
-                  </div>
+            <div 
+              key={lesson.id} 
+              onClick={() => onLesson?.(lesson)} 
+              className="bg-white rounded-[24px] p-5 flex items-center gap-5 border border-black/5 shadow-sm active:scale-[0.98] transition-all cursor-pointer group hover:shadow-md"
+            >
+              <div className={`w-14 h-14 rounded-2xl ${c.bg} ${c.text} flex items-center justify-center text-2xl font-bold shrink-0 border ${c.border} transition-transform group-hover:scale-105`}>
+                {i + 1}
+              </div>
+              
+              <div className="flex-1 min-w-0">
+                <h3 className="font-sans text-[16px] font-bold text-[#0F0F12] truncate mb-1">
+                  {lesson.hook.split('?')[0].replace(/Why does a |How does a |Why can |Why does the /i, '') + "..."}
+                </h3>
+                <p className="text-[13px] text-[#6B6B7B] font-medium mb-3">
+                  {i + 1} • {lesson.concept}
+                </p>
+                
+                <div className="flex gap-2">
+                  <span className="bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide">+{lesson.xp} XP</span>
+                  <span className="bg-gray-50 text-gray-500 border border-gray-100 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide uppercase">3 MINS</span>
                 </div>
               </div>
-            </Card>
+              <div className="text-gray-300">
+                <ChevronRight size={20} />
+              </div>
+            </div>
           );
         })}
       </div>
@@ -511,145 +496,128 @@ export function ScienceHomeScreen({ sportId = 'Badminton', onLesson, onBack }) {
 
 // ── Science Lesson: hook → explanation → try it prompt ───────────────────────
 export function ScienceLessonScreen({ lesson, onQuiz, onBack }) {
-  const [step, setStep] = useState(0); // 0=hook, 1=concept, 2=tryit
+  const [step, setStep] = useState(0); 
   const c = TIER_COLORS[lesson?.tier || 'Curious'];
   const L = lesson || LESSONS.Badminton[0];
 
   const steps = ['The hook', 'The science', 'Try it yourself'];
 
   return (
-    <div style={{ minHeight:'100vh', background:T.bgPage,
-      display:'flex', flexDirection:'column' }}>
+    <div className="min-h-screen bg-[#F2F2F7] flex flex-col overflow-hidden pb-10">
+      {/* Header */}
+      <div className="pt-14 px-6 flex items-center gap-4 shrink-0">
+        <button onClick={onBack} className="w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-xl">←</span>
+        </button>
+        <div>
+          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-0.5">{L.tier} level</p>
+          <h2 className="font-serif text-[20px] font-medium text-black leading-tight">{L.concept}</h2>
+        </div>
+      </div>
 
-      <HeroStrip height={140}>
-        <div style={{ width:'100%', padding:'0 16px',
-          display:'flex', alignItems:'center', gap:12 }}>
-          <button onClick={onBack} style={{ background:'rgba(255,255,255,0.8)',
-            border:'none', borderRadius:9999, width:36, height:36,
-            cursor:'pointer', fontSize:16, display:'flex',
-            alignItems:'center', justifyContent:'center', flexShrink:0 }}>←</button>
-          <div>
-            <Label style={{ color:'rgba(15,15,18,0.5)', marginBottom:2 }}>
-              {L.concept}
-            </Label>
-            <h2 style={{ fontFamily:T.serif, fontSize:18, fontWeight:400,
-              color:T.textPrimary, letterSpacing:'-0.015em', margin:0 }}>
-              {L.tier} level
-            </h2>
+      {/* Progress */}
+      <div className="px-6 mt-6 flex gap-2">
+        {steps.map((s, i) => (
+          <div key={i} className="flex-1 space-y-2">
+            <div className={`h-1.5 rounded-full transition-all duration-500 ${i <= step ? 'bg-black' : 'bg-gray-200'}`} />
+            <span className={`text-[9px] font-bold uppercase tracking-wider ${i === step ? 'text-black' : 'text-gray-400'}`}>{s}</span>
           </div>
-        </div>
-        {/* Step dots */}
-        <div style={{ display:'flex', gap:6, marginTop:12 }}>
-          {steps.map((s, i) => (
-            <div key={i} style={{ display:'flex', flexDirection:'column',
-              alignItems:'center', gap:3 }}>
-              <div style={{ height:3, width: i===step ? 28 : 10,
-                borderRadius:2, background: i<=step ? '#0F0F12' : '#D1D1D8',
-                transition:'all .2s' }}/>
-              <span style={{ fontSize:9, fontFamily:T.sans,
-                color: i===step ? T.textPrimary : T.textTert,
-                fontWeight: i===step ? 600 : 400 }}>{s}</span>
-            </div>
-          ))}
-        </div>
-      </HeroStrip>
+        ))}
+      </div>
 
-      <div style={{ flex:1, padding:'24px 16px',
-        display:'flex', flexDirection:'column', gap:20 }}>
-
+      <div className="flex-1 p-6 space-y-6 overflow-y-auto no-scrollbar">
         {step === 0 && (
-          <>
-            {/* Hook */}
-            <Card style={{ padding:'24px 20px', background:c.bg,
-              border:`1px solid ${c.border}` }}>
-              <Label style={{ color:c.text, marginBottom:10 }}>The question</Label>
-              <h2 style={{ fontFamily:T.serif, fontSize:22, fontWeight:400,
-                color:T.textPrimary, letterSpacing:'-0.02em',
-                lineHeight:1.3, marginBottom:12 }}>
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="bg-white rounded-[32px] p-8 border border-black/5 shadow-sm mb-6">
+              <p className="text-indigo-600 text-[11px] font-bold tracking-[0.1em] uppercase mb-4">The Question</p>
+              <h2 className="font-serif text-[28px] font-medium text-black leading-tight mb-6">
                 {L.hook}
               </h2>
-              <p style={{ fontFamily:T.sans, fontSize:13,
-                color:T.textSecond, lineHeight:1.6, margin:0 }}>
+              <p className="text-[#6B6B7B] leading-relaxed text-[15px] font-medium">
                 {L.hookSub}
               </p>
-            </Card>
+            </div>
 
-            {/* Inline sport illustration */}
-            <SportIllustration type={L.visual}/>
+            {/* Video-style placeholder */}
+            <div className="relative aspect-video bg-black rounded-[24px] overflow-hidden shadow-2xl mb-8 group">
+               <img src={`https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2690&auto=format&fit=crop`} className="w-full h-full object-cover opacity-60" alt="" />
+               <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                     <div className="ml-1 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-black" />
+                  </div>
+               </div>
+            </div>
 
-            <BtnPrimary onClick={() => setStep(1)}>
-              Show me the science →
-            </BtnPrimary>
-          </>
+            {/* Mascot Tip */}
+            <div className="relative bg-indigo-50/50 rounded-[24px] p-6 pr-24 border border-indigo-100/50 mb-8">
+               <p className="italic text-indigo-700/80 text-[14px] leading-relaxed">
+                 "Think about how gravity pulls the object down while inertia keeps it moving forward!"
+               </p>
+               <img src="/img/mascot.png" className="absolute -bottom-2 -right-4 w-28 h-28 object-contain" alt="" onError={(e) => { e.currentTarget.style.display='none'; }} />
+               <span className="absolute -bottom-2 -right-2 text-4xl">🦉</span>
+            </div>
+
+            <button 
+              onClick={() => setStep(1)}
+              className="w-full bg-[#0F0F12] text-white py-5 rounded-full font-bold text-[16px] shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3"
+            >
+              Continue Learning <div className="ml-2 w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            </button>
+          </div>
         )}
 
         {step === 1 && (
-          <>
-            <Label>The concept: {L.concept}</Label>
-
+          <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+            <p className="text-[11px] font-bold text-gray-400 tracking-widest uppercase mb-2">The scientific breakdown</p>
             {L.explanation.map((line, i) => (
-              <Card key={i} style={{ padding:'14px 18px', display:'flex',
-                gap:12, alignItems:'flex-start' }}>
-                <div style={{ width:24, height:24, borderRadius:9999,
-                  background:c.bg, border:`1px solid ${c.border}`,
-                  display:'flex', alignItems:'center',
-                  justifyContent:'center', flexShrink:0, marginTop:1 }}>
-                  <span style={{ fontFamily:T.sans, fontSize:11,
-                    fontWeight:700, color:c.text }}>{i+1}</span>
+              <div key={i} className="bg-white rounded-[24px] p-5 flex gap-4 border border-black/5 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm shrink-0">
+                  {i + 1}
                 </div>
-                <p style={{ fontFamily:T.sans, fontSize:14,
-                  color:T.textPrimary, lineHeight:1.6, margin:0 }}>{line}</p>
-              </Card>
+                <p className="text-[15px] text-gray-800 leading-relaxed font-medium">{line}</p>
+              </div>
             ))}
 
             {L.formula && (
-              <Card style={{ padding:'14px 18px',
-                background:'#F8F8FC', borderLeft:`3px solid ${T.indigo}` }}>
-                <Label style={{ marginBottom:6 }}>Formula ({L.tier})</Label>
-                <p style={{ fontFamily:"'Courier New',monospace", fontSize:15,
-                  color:T.indigo, margin:0, letterSpacing:'0.02em' }}>
-                  {L.formula}
-                </p>
-              </Card>
+              <div className="bg-black text-white p-6 rounded-[24px] shadow-xl mt-4">
+                <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-3">Mathematical Model</p>
+                <p className="font-mono text-xl tracking-wider text-indigo-400">{L.formula}</p>
+              </div>
             )}
 
-            <BtnPrimary onClick={() => setStep(2)}>Got it →</BtnPrimary>
-          </>
+            <button onClick={() => setStep(2)} className="w-full bg-[#0F0F12] text-white py-5 rounded-full font-bold text-[16px] shadow-xl active:scale-95 transition-all mt-6">
+              Got it, let's test it →
+            </button>
+          </div>
         )}
 
         {step === 2 && (
-          <>
-            <Card style={{ padding:'20px', background:c.bg,
-              border:`1px solid ${c.border}` }}>
-              <Label style={{ color:c.text, marginBottom:10 }}>
-                Try it yourself
-              </Label>
-              <h3 style={{ fontFamily:T.serif, fontSize:18, fontWeight:400,
-                color:T.textPrimary, marginBottom:12, letterSpacing:'-0.01em' }}>
-                Go outside and test it
-              </h3>
-              <TryItPrompt type={L.visual} sport="Badminton"/>
-            </Card>
-
-            <Card style={{ padding:'14px 18px',
-              display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-              <div>
-                <p style={{ fontFamily:T.sans, fontSize:13, fontWeight:500,
-                  color:T.textPrimary, margin:0 }}>Ready for the challenge?</p>
-                <p style={{ fontFamily:T.sans, fontSize:12,
-                  color:T.textSecond, margin:'2px 0 0' }}>
-                  Answer 1 question · earn +{L.xp} XP
+          <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
+             <div className="bg-amber-50 rounded-[32px] p-8 border border-amber-100 shadow-sm">
+                <p className="text-amber-600 text-[11px] font-bold tracking-[0.1em] uppercase mb-4">Try it yourself</p>
+                <h3 className="font-serif text-[24px] font-medium text-black leading-tight mb-4">Go outside and test it</h3>
+                <p className="text-amber-900/70 leading-relaxed text-[15px] font-medium">
+                  Find a clear space and try to replicate the motion. Observe how changing the force impacts the result!
                 </p>
-              </div>
-              <span style={{ fontFamily:T.serif, fontSize:22,
-                color:T.indigo }}>{L.xp}</span>
-            </Card>
+             </div>
 
-            <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-              <BtnPrimary onClick={onQuiz}>Take the challenge →</BtnPrimary>
-              <BtnSecondary onClick={onBack}>Back to lessons</BtnSecondary>
-            </div>
-          </>
+             <div className="bg-white rounded-[24px] p-6 flex justify-between items-center border border-black/5 shadow-sm">
+                <div>
+                   <p className="text-[15px] font-bold text-black">Ready for the challenge?</p>
+                   <p className="text-[13px] text-gray-500">Answer 1 question · earn +{L.xp} XP</p>
+                </div>
+                <div className="text-3xl font-serif text-indigo-600">+{L.xp}</div>
+             </div>
+
+             <div className="flex flex-col gap-3">
+               <button onClick={onQuiz} className="w-full bg-[#0F0F12] text-white py-5 rounded-full font-bold text-[16px] shadow-xl active:scale-95 transition-all">
+                 Take the challenge →
+               </button>
+               <button onClick={onBack} className="w-full bg-white text-gray-500 py-5 rounded-full font-bold text-[16px] border border-gray-200">
+                 Maybe later
+               </button>
+             </div>
+          </div>
         )}
       </div>
     </div>
@@ -972,8 +940,14 @@ export function ProjectileMotionScreen({ onBack, onContinue }) {
         <p style={{ fontFamily: T.sans, fontSize: 14, color: '#6B6B7B', lineHeight: 1.5, margin: 0 }}>The football covers maximum range when kicked at angle of 45°.</p>
       </Card>
 
-      <div style={{ borderRadius: 20, overflow: 'hidden', marginBottom: 24, boxShadow: '0 4px 12px rgba(0,0,0,0.05)', position: 'relative' }}>
-        <img src="/trajectory.png" style={{ width: '100%', display: 'block', height: 220, objectFit: 'cover' }} alt="Trajectory" />
+      <div style={{ borderRadius: 20, overflow: 'hidden', marginBottom: 24, boxShadow: '0 4px 12px rgba(0,0,0,0.05)', position: 'relative', background: '#000' }}>
+        {/* TODO: drop your video file at public/learning-module.mp4 */}
+        <video
+          src="/learning-module.mp4"
+          controls
+          playsInline
+          style={{ width: '100%', display: 'block', height: 220, objectFit: 'cover' }}
+        />
       </div>
 
       <div style={{ marginTop: 'auto', position: 'relative', paddingBottom: 24 }}>

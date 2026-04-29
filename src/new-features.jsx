@@ -19,19 +19,19 @@ const T = {
   textTertiary: '#9090A0',
   borderLight:  'rgba(0,0,0,0.06)',
   borderMed:    '#D1D1D8',
-  accentIndigo: '#E85D24',
+  accentIndigo: '#4338CA',
   accentGreen:  '#16A34A',
-  pillBg:       '#FEF0E7',
-  pillBorder:   '#F5C4AA',
-  pillText:     '#E85D24',
-  illusBlue:    'linear-gradient(160deg, #F5C4AA 0%, #E85D24 100%)',
+  pillBg:       '#EEF2FF',
+  pillBorder:   '#C7D2FE',
+  pillText:     '#4338CA',
+  illusBlue:    'linear-gradient(160deg, #C7D2FE 0%, #818CF8 100%)',
   illusOrange:  'linear-gradient(135deg, #FED7AA 0%, #F97316 60%, #EA580C 100%)',
   illusGreen:   'linear-gradient(135deg, #BBF7D0 0%, #4ADE80 50%, #16A34A 100%)',
   illusViolet:  'linear-gradient(135deg, #E9D5FF 0%, #A855F7 60%, #7E22CE 100%)',
   illusRed:     'linear-gradient(135deg, #FECACA 0%, #F87171 50%, #DC2626 100%)',
   heroGradient: `radial-gradient(ellipse 60% 55% at 50% -5%, #F97316 0%, #FB923C 25%, transparent 65%),
-                 radial-gradient(ellipse 45% 55% at -5% 50%, #F5C4AA 0%, transparent 60%),
-                 radial-gradient(ellipse 45% 55% at 105% 50%, #F5C4AA 0%, transparent 60%)`,
+                 radial-gradient(ellipse 45% 55% at -5% 50%, #C7D2FE 0%, transparent 60%),
+                 radial-gradient(ellipse 45% 55% at 105% 50%, #C7D2FE 0%, transparent 60%)`,
   fontSerif:    "'Lora', Georgia, serif",
   fontSans:     "'Inter', system-ui, sans-serif",
 };
@@ -59,7 +59,7 @@ const BadgePill = ({ children, color = T.pillText, bg = T.pillBg, border = T.pil
 );
 
 const SectionLabel = ({ children, style={} }) => (
-  <p style={{ fontFamily:T.fontSans, fontSize:10, fontWeight:500, letterSpacing:'0.6px', textTransform:'uppercase', color:'#888888', ...style }}>{children}</p>
+  <p style={{ fontFamily:T.fontSans, fontSize:11, fontWeight:500, letterSpacing:'0.07em', textTransform:'uppercase', color:T.textTertiary, ...style }}>{children}</p>
 );
 
 const Card = ({ children, style={}, onClick }) => (
@@ -73,11 +73,11 @@ const ProgressBar = ({ value=0, color='linear-gradient(90deg, #818CF8, #6366F1)'
 );
 
 const BtnPrimary = ({ children, onClick, disabled=false, style={} }) => (
-  <button onClick={onClick} disabled={disabled} style={{ background:disabled?'#D1D1D8':'#0F0F12', color:disabled?'#9090A0':'#FFFFFF', border:'none', borderRadius:12, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:600, letterSpacing:'-0.01em', cursor:disabled?'not-allowed':'pointer', ...style }}>{children}</button>
+  <button onClick={onClick} disabled={disabled} style={{ background:disabled?'#D1D1D8':'#0F0F12', color:disabled?'#9090A0':'#FFFFFF', border:'none', borderRadius:9999, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:600, letterSpacing:'-0.01em', cursor:disabled?'not-allowed':'pointer', ...style }}>{children}</button>
 );
 
 const BtnSecondary = ({ children, onClick, style={} }) => (
-  <button onClick={onClick} style={{ background:T.bgCard, color:T.textPrimary, border:`1px solid ${T.borderMed}`, borderRadius:12, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:400, cursor:'pointer', ...style }}>{children}</button>
+  <button onClick={onClick} style={{ background:T.bgCard, color:T.textPrimary, border:`1px solid ${T.borderMed}`, borderRadius:9999, padding:'14px 28px', width:'100%', fontFamily:T.fontSans, fontSize:16, fontWeight:400, cursor:'pointer', ...style }}>{children}</button>
 );
 
 // ─────────────────────────────────────────────
@@ -103,144 +103,129 @@ const LEADERBOARD = [
 ];
 
 export function ChallengesScreen() {
-  const [tab, setTab]   = useState('Challenges');
-  const [lbTab, setLbTab] = useState('State');
-  const tabs = ['Challenges','Leaderboard'];
-  const lbTabs = ['State','National'];
-
+  const navigate = useNavigate(); // added missing navigate for back button if needed, but not in original
   const totalXP = 1620;
 
   return (
-    <div style={{ minHeight:'100vh', background:T.bgPage, display:'flex', flexDirection:'column', paddingBottom:80 }}>
+    <div style={{ minHeight:'100vh', background:'#F2F2F7', display:'flex', flexDirection:'column', position:'relative' }}>
+      {/* Top Gradient Glow */}
+      <div style={{ position: 'absolute', top: -50, left: -50, right: -50, height: 200, background: 'radial-gradient(ellipse 70% 60% at 50% 0%, #F97316 0%, #FB923C 20%, transparent 60%)', opacity: 0.8, pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'absolute', top: 50, left: 100, right: 0, height: 200, background: 'radial-gradient(ellipse 70% 60% at 50% 0%, #C7D2FE 0%, transparent 60%)', opacity: 0.5, pointerEvents: 'none', zIndex: 0 }} />
 
-      <HeroStrip height={190}>
-        <div style={{ position:'absolute', top:55, display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
-          <ScrollMotif size={70}/>
-          <BadgePill>{totalXP} XP total</BadgePill>
-        </div>
-        <h1 style={{ fontFamily:T.fontSerif, fontSize:26, fontWeight:400, color:T.textPrimary, letterSpacing:'-0.02em' }}>Challenges</h1>
-      </HeroStrip>
-
-      {/* Tab strip */}
-      <div style={{ display:'flex', background:T.bgCard, borderBottom:`0.5px solid ${T.borderLight}`, flexShrink:0 }}>
-        {tabs.map(t => (
-          <button key={t} onClick={()=>setTab(t)} style={{ flex:1, padding:'13px 0', border:'none', background:'transparent', fontFamily:T.fontSans, fontSize:14, fontWeight:tab===t?600:400, color:tab===t?T.textPrimary:T.textTertiary, borderBottom:tab===t?`2px solid ${T.accentIndigo}`:'2px solid transparent', cursor:'pointer', transition:'all .15s' }}>{t}</button>
-        ))}
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '60px 24px 24px', zIndex: 1 }}>
+        <h1 style={{ fontFamily: T.fontSans, fontSize: '28px', fontWeight: 600, color: '#0F0F12', letterSpacing: '-0.02em', margin: 0 }}>Challenges</h1>
+        <span style={{ border: '1px solid #C7D2FE', background: '#EEF2FF', color: '#4338CA', padding: '6px 12px', borderRadius: '9999px', fontFamily: T.fontSans, fontSize: '12px', fontWeight: 600 }}>
+          {totalXP} XP total
+        </span>
       </div>
 
-      <div style={{ flex:1, padding:'16px 16px 0', display:'flex', flexDirection:'column', gap:14 }}>
+      <div style={{ flex:1, padding:'0 16px 20px', display:'flex', flexDirection:'column', gap:20, zIndex: 1 }}>
 
-        {tab === 'Challenges' && (
-          <>
-            {/* XP progress card */}
-            <Card style={{ padding:'14px 18px' }}>
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10 }}>
-                <div>
-                  <SectionLabel style={{ marginBottom:3 }}>Weekly XP</SectionLabel>
-                  <div style={{ display:'flex', alignItems:'baseline', gap:4 }}>
-                    <span style={{ fontFamily:T.fontSerif, fontSize:32, fontWeight:400, color:T.textPrimary, letterSpacing:'-0.03em' }}>340</span>
-                    <span style={{ fontFamily:T.fontSans, fontSize:13, color:T.textSecond }}> / 500 XP</span>
+        {/* Streak banner */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+          <div style={{ background: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)', borderRadius: '24px', padding: '20px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+            <h2 style={{ fontFamily: T.fontSans, fontSize: '15px', fontWeight: 600, margin: '0 0 16px 0' }}>5 Days On Streak!</h2>
+            <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '4px', margin: '0 -10px', paddingLeft: '10px', paddingRight: '10px' }}>
+              {[
+                 { xp: '+60 XP',  active: true, opacity: 0.3 },
+                 { xp: '+60 XP',  active: true, opacity: 0.7 },
+                 { xp: '+240 XP', active: true, opacity: 1 },
+                 { xp: '+110 XP', active: true, opacity: 1 },
+                 { xp: '+40 XP',  active: true, opacity: 1 },
+                 { xp: '+60 XP',  active: true, opacity: 1 }
+              ].map((m, i) => (
+                <div key={i} style={{ width: '64px', flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: m.opacity }}>
+                  <div style={{ width: '56px', height: '64px', background: 'rgba(255,255,255,0.2)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0.3)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 60%)', opacity: 0.5 }}></div>
+                    <span style={{ fontSize: '24px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}>🌟</span>
                   </div>
+                  <span style={{ fontFamily: T.fontSans, fontSize: '11px', fontWeight: 600, color: '#fff' }}>{m.xp}</span>
                 </div>
-                <div style={{ textAlign:'right' }}>
-                  <SectionLabel style={{ marginBottom:3 }}>Level</SectionLabel>
-                  <span style={{ fontFamily:T.fontSerif, fontSize:28, fontWeight:400, color:T.accentIndigo }}>4</span>
-                </div>
-              </div>
-              <ProgressBar value={68}/>
-              <p style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary, marginTop:6 }}>160 XP to reach Level 5</p>
-            </Card>
-
-            <SectionLabel>Active challenges</SectionLabel>
-
-            {CHALLENGES.filter(c=>c.joined).map(c => (
-              <Card key={c.id} style={{ padding:'16px 18px' }}>
-                <div style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
-                  {/* Gradient icon */}
-                  <div style={{ width:44, height:44, borderRadius:12, background:c.gradient, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                  </div>
-                  <div style={{ flex:1 }}>
-                    <div style={{ fontFamily:T.fontSans, fontSize:14, fontWeight:600, color:T.textPrimary, marginBottom:3 }}>{c.title}</div>
-                    <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:8 }}>
-                      <span style={{ background:T.pillBg, color:T.pillText, border:`1px solid ${T.pillBorder}`, borderRadius:4, padding:'2px 7px', fontFamily:T.fontSans, fontSize:10, fontWeight:500, letterSpacing:'0.04em', textTransform:'uppercase' }}>{c.sport}</span>
-                      <span style={{ fontFamily:T.fontSans, fontSize:11, fontWeight:600, color:T.accentIndigo }}>+{c.xp} XP</span>
-                      <span style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary }}>{c.days}d left</span>
-                    </div>
-                    <ProgressBar value={c.progress}/>
-                    <div style={{ display:'flex', justifyContent:'space-between', marginTop:4 }}>
-                      <span style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary }}>{c.progress}% complete</span>
-                      <span style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary }}>{c.participants} athletes</span>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-
-            <SectionLabel style={{ marginTop:4 }}>Join a challenge</SectionLabel>
-
-            {CHALLENGES.filter(c=>!c.joined).map(c => (
-              <Card key={c.id} style={{ padding:'14px 18px', display:'flex', gap:12, alignItems:'center' }}>
-                <div style={{ width:40, height:40, borderRadius:10, background:c.gradient, flexShrink:0 }}/>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:T.fontSans, fontSize:13, fontWeight:600, color:T.textPrimary }}>{c.title}</div>
-                  <div style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary, marginTop:2 }}>{c.sport} · +{c.xp} XP · {c.participants} athletes</div>
-                </div>
-                <button style={{ background:T.bgPage, border:`1px solid ${T.borderMed}`, borderRadius:9999, padding:'6px 14px', fontFamily:T.fontSans, fontSize:12, fontWeight:600, color:T.textPrimary, cursor:'pointer', whiteSpace:'nowrap' }}>Join</button>
-              </Card>
-            ))}
-          </>
-        )}
-
-        {tab === 'Leaderboard' && (
-          <>
-            {/* Scope tabs */}
-            <div style={{ display:'flex', background:T.bgCard, border:`1px solid ${T.borderMed}`, borderRadius:9999, padding:3, gap:2 }}>
-              {lbTabs.map(t => (
-                <button key={t} onClick={()=>setLbTab(t)} style={{ flex:1, padding:'8px 0', borderRadius:9999, border:'none', background:lbTab===t?'#0F0F12':'transparent', color:lbTab===t?'#fff':T.textSecond, fontFamily:T.fontSans, fontSize:13, fontWeight:lbTab===t?600:400, cursor:'pointer' }}>{t}</button>
               ))}
             </div>
+          </div>
+          
+          <div style={{ background: '#fff', borderRadius: '24px', padding: '16px 20px', marginTop: '-12px', boxShadow: '0 4px 12px rgba(0,0,0,0.03)', display: 'flex', justifyContent: 'space-between', zIndex: 1 }}>
+             {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => {
+               const done = i < 2; // Green stars
+               return (
+                 <div key={day} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                   <svg width="24" height="24" viewBox="0 0 24 24" fill={done ? '#4ADE80' : '#E5E5EA'}>
+                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                   </svg>
+                   <span style={{ fontFamily: T.fontSans, fontSize: '11px', color: '#6B6B7B' }}>{day}</span>
+                 </div>
+               )
+             })}
+          </div>
+        </div>
 
-            <SectionLabel>{lbTab === 'State' ? 'Maharashtra' : 'All India'} · this month</SectionLabel>
+        <SectionLabel style={{ color: '#9090A0', fontWeight: 600, letterSpacing: '0.05em' }}>ACTIVE CHALLENGES</SectionLabel>
 
-            {/* Top 3 podium */}
-            <Card style={{ padding:'20px 18px' }}>
-              <div style={{ display:'flex', justifyContent:'center', alignItems:'flex-end', gap:16, marginBottom:16 }}>
-                {[LEADERBOARD[1], LEADERBOARD[0], LEADERBOARD[2]].map((p, idx) => {
-                  const heights = [72, 90, 60];
-                  const colors  = [T.illusBlue, T.illusOrange, T.illusViolet];
-                  const ranks   = [2, 1, 3];
-                  return (
-                    <div key={p.rank} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:6 }}>
-                      <div style={{ width:44, height:44, borderRadius:'50%', background:colors[idx], display:'flex', alignItems:'center', justifyContent:'center', fontFamily:T.fontSans, fontSize:14, fontWeight:700, color:'#fff', border:p.you?`3px solid ${T.accentIndigo}`:'3px solid transparent' }}>
-                        {p.name.split(' ').map(n=>n[0]).join('')}
-                      </div>
-                      <div style={{ width:56, height:heights[idx], background:colors[idx], borderRadius:'6px 6px 0 0', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingTop:6 }}>
-                        <span style={{ fontFamily:T.fontSans, fontSize:14, fontWeight:700, color:'rgba(255,255,255,0.9)' }}>{ranks[idx]}</span>
-                      </div>
-                      <span style={{ fontFamily:T.fontSans, fontSize:10, fontWeight:500, color:T.textPrimary, textAlign:'center', maxWidth:60 }}>{p.name.split(' ')[0]}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
+        {/* Challenge 1 */}
+        <div style={{ background: '#fff', borderRadius: '20px', border: '1px solid #C7D2FE', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ width: '64px', height: '64px', flexShrink: 0 }}>
+             <img src="/img/sport-cycling.png" alt="Cycling" style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }} />
+             <div style={{ width: '100%', height: '100%', background: '#F2F2F7', borderRadius: '50%', display: 'none', alignItems:'center', justifyContent:'center', fontSize: '24px' }}>🚲</div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <h3 style={{ fontFamily: T.fontSans, fontSize: '15px', fontWeight: 600, color: '#0F0F12', marginBottom: '8px' }}>30km Cycling Sprint</h3>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+              <span style={{ background: '#EEF2FF', color: '#4338CA', border: '1px solid #C7D2FE', borderRadius: '4px', padding: '2px 6px', fontFamily: T.fontSans, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em' }}>CYCLING</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', fontWeight: 700, color: '#4338CA' }}>+100 XP</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#9090A0' }}>2d left</span>
+            </div>
+            <div style={{ height: '4px', background: '#E5E5EA', borderRadius: '2px', overflow: 'hidden', marginBottom: '8px' }}>
+              <div style={{ height: '100%', width: '68%', background: '#4338CA', borderRadius: '2px' }} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#6B6B7B' }}>68% complete</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#9090A0' }}>142 athletes</span>
+            </div>
+          </div>
+        </div>
 
-            {/* Full list */}
-            {LEADERBOARD.map(p => (
-              <div key={p.rank} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 0', borderBottom:`0.5px solid ${T.borderLight}`, background:p.you?T.pillBg:'transparent', borderRadius:p.you?10:0, paddingLeft:p.you?12:0, paddingRight:p.you?12:0 }}>
-                <span style={{ fontFamily:T.fontSerif, fontSize:18, fontWeight:400, color:p.rank<=3?T.accentIndigo:T.textTertiary, width:28, textAlign:'center' }}>{p.rank}</span>
-                <div style={{ width:34, height:34, borderRadius:'50%', background:p.you?T.illusBlue:T.bgPage, border:`1px solid ${T.borderMed}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:T.fontSans, fontSize:12, fontWeight:600, color:p.you?'#fff':T.textSecond, flexShrink:0 }}>
-                  {p.name.split(' ').map(n=>n[0]).join('')}
-                </div>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:T.fontSans, fontSize:13, fontWeight:p.you?600:500, color:T.textPrimary }}>{p.name} {p.you && <span style={{ fontSize:10, color:T.accentIndigo }}>(you)</span>}</div>
-                  <div style={{ fontFamily:T.fontSans, fontSize:11, color:T.textTertiary }}>{p.state}</div>
-                </div>
-                <span style={{ fontFamily:T.fontSans, fontSize:13, fontWeight:600, color:T.accentIndigo }}>{p.xp.toLocaleString()} XP</span>
-              </div>
-            ))}
-          </>
-        )}
+        {/* Challenge 2 */}
+        <div style={{ background: '#fff', borderRadius: '20px', border: '1px solid #C7D2FE', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ width: '64px', height: '64px', flexShrink: 0 }}>
+             <img src="/img/sport-basketball.png" alt="Basketball" style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }} />
+             <div style={{ width: '100%', height: '100%', background: '#F2F2F7', borderRadius: '50%', display: 'none', alignItems:'center', justifyContent:'center', fontSize: '24px' }}>🏀</div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <h3 style={{ fontFamily: T.fontSans, fontSize: '15px', fontWeight: 600, color: '#0F0F12', marginBottom: '8px' }}>100 Free Throws</h3>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+              <span style={{ background: '#EEF2FF', color: '#4338CA', border: '1px solid #C7D2FE', borderRadius: '4px', padding: '2px 6px', fontFamily: T.fontSans, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em' }}>BASKETBALL</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', fontWeight: 700, color: '#4338CA' }}>+250 XP</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#9090A0' }}>5d left</span>
+            </div>
+            <div style={{ height: '4px', background: '#E5E5EA', borderRadius: '2px', overflow: 'hidden', marginBottom: '8px' }}>
+              <div style={{ height: '100%', width: '30%', background: '#4338CA', borderRadius: '2px' }} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#6B6B7B' }}>30% complete</span>
+              <span style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#9090A0' }}>89 athletes</span>
+            </div>
+          </div>
+        </div>
+
+        <SectionLabel style={{ color: '#9090A0', fontWeight: 600, letterSpacing: '0.05em', marginTop: '12px' }}>JOIN A CHALLENGE</SectionLabel>
+
+        {[
+          { title: '5K Morning Run', sport: 'Athletics', xp: '+80 XP', athletes: '310 athletes' },
+          { title: 'Flexibility Week', sport: 'Gymnastics', xp: '+120 XP', athletes: '56 athletes' },
+        ].map((c, i) => (
+          <div key={i} style={{ background: '#fff', borderRadius: '20px', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+            <div>
+              <h4 style={{ fontFamily: T.fontSans, fontSize: '14px', fontWeight: 600, color: '#0F0F12', marginBottom: '4px' }}>{c.title}</h4>
+              <p style={{ fontFamily: T.fontSans, fontSize: '12px', color: '#6B6B7B' }}>{c.sport} · {c.xp} · {c.athletes}</p>
+            </div>
+            <button style={{ background: '#EEF2FF', color: '#4338CA', border: '1px solid #C7D2FE', borderRadius: '9999px', padding: '6px 16px', fontFamily: T.fontSans, fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>
+              Join
+            </button>
+          </div>
+        ))}
+
       </div>
     </div>
   );

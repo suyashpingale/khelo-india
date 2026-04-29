@@ -10,14 +10,16 @@
   --color-text-primary: #0F0F12;
   --color-text-secondary: #6B6B7B;
   --color-text-tertiary: #9090A0;
-  --color-accent-indigo: #E85D24;
+  
+  --color-primary-orange: #f97316;
+  --color-accent-indigo: #4338CA;
   --color-accent-green: #16A34A;
   --color-border-light: rgba(0, 0, 0, 0.06);
   --color-border-medium: #D1D1D8;
 
-  --background-image-gradient-hero: radial-gradient(ellipse 60% 55% at 50% -5%, #F97316 0%, #FB923C 25%, transparent 65%),
-    radial-gradient(ellipse 45% 55% at -5% 50%, #C7D2FE 0%, transparent 60%),
-    radial-gradient(ellipse 45% 55% at 105% 50%, #C7D2FE 0%, transparent 60%);
+  --background-image-gradient-home: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(249,115,22,1) 0%, rgba(250,131,41,0.8) 20%, transparent 50%),
+    radial-gradient(ellipse 60% 60% at -20% 40%, rgba(199,210,254,1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 120% 40%, rgba(199,210,254,1) 0%, transparent 60%);
 
   --background-image-illus-blue: linear-gradient(160deg, #C7D2FE 0%, #818CF8 100%);
   --background-image-illus-orange: linear-gradient(135deg, #FED7AA 0%, #F97316 60%, #EA580C 100%);
@@ -57,7 +59,7 @@
 }
 
 .screen-hero {
-  @apply min-h-[160px] bg-bg-page bg-gradient-hero flex flex-col items-center justify-end pb-5;
+  @apply min-h-[160px] bg-bg-page bg-gradient-home flex flex-col items-center justify-end pb-5;
 }
 
 .tab-bar {
