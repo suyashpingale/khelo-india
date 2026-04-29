@@ -2,15 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ─── Figma Asset URLs (node 2132:3274) ───
-const IMG_T20_NEWS      = "https://www.figma.com/api/mcp/asset/8820e57c-2985-482c-b682-509d10c59ddf";
-const IMG_TILTED_CARD   = "https://www.figma.com/api/mcp/asset/b380a854-a3be-4ffb-a637-d6e78efeaa7a";
-const IMG_STAR_FILLED   = "https://www.figma.com/api/mcp/asset/31b76ec9-f487-4c20-bcf2-9def6456c84a";
-const IMG_STAR_EMPTY    = "https://www.figma.com/api/mcp/asset/6a1d0f09-8d0c-4b34-9f31-592cee5c9d53";
-const IMG_LEARN_ARC     = "https://www.figma.com/api/mcp/asset/b06d5301-b0d8-4e68-8829-3c325f43c38c";
-const IMG_ARROW         = "https://www.figma.com/api/mcp/asset/8d70052a-e3f1-493d-a6ba-59ac647158c9";
-const IMG_PARA_VECTOR   = "https://www.figma.com/api/mcp/asset/f68bbe38-64a5-4de5-becd-bf3df3b46cd3";
-const IMG_NEWS_VECTOR   = "https://www.figma.com/api/mcp/asset/73070cfe-4dfd-4120-94d8-e9092f91f791";
-const IMG_SPORTS_VECTOR = "https://www.figma.com/api/mcp/asset/5b698b33-f8d3-4cd1-90b3-af7b63ac8751";
+const IMG_T20_NEWS      = "/img/home-t20-news.jpg";
+const IMG_TILTED_CARD   = "/img/home-tilted-card.png";
+const IMG_STAR_FILLED   = "/img/home-star-filled.svg";
+const IMG_STAR_EMPTY    = "/img/home-star-empty.svg";
+const IMG_LEARN_ARC     = "/img/home-learn-arc.svg";
+const IMG_ARROW         = "/img/home-arrow.svg";
+const IMG_PARA_VECTOR   = "/img/home-para-vector.svg";
+const IMG_NEWS_VECTOR   = "/img/home-news-vector.svg";
+const IMG_SPORTS_VECTOR = "/img/home-sports-vector.svg";
 
 export function NewHomeScreen() {
   const navigate = useNavigate();
